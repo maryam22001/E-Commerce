@@ -1,0 +1,246 @@
+[{
+  "name": "Running Sneakers",
+  "description": "Comfortable sneakers for running and daily workouts",
+  "price": 80,
+  "category": "sports",
+  "image": "https://source.unsplash.com/featured/?running-shoes",
+  "tags": [
+    "sports",
+    "football"
+  ],
+  "isDeleted": false,
+  "quantity": 40
+},
+{
+  "name": "Gym Training Shoes",
+  "description": "Durable shoes designed for gym and fitness training",
+  "price": 70,
+  "category": "sports",
+  "image": "https://source.unsplash.com/featured/?training-shoes",
+  "isDeleted": false,
+  "quantity": 25
+},
+{
+  "name": "Football Pro Ball",
+  "description": "Professional football designed for training sessions",
+  "price": 35,
+  "category": "sports",
+  "image": "https://source.unsplash.com/featured/?football-ball",
+  "isDeleted": false
+},
+{
+  "name": "Basketball Pro Ball",
+  "description": "Indoor outdoor basketball with strong grip",
+  "price": 45,
+  "category": "sports",
+  "image": "https://source.unsplash.com/featured/?basketball",
+  "isDeleted": false
+},
+{
+  "name": "Yoga Training Mat",
+  "description": "Soft yoga mat ideal for stretching and workouts",
+  "price": 30,
+  "category": "sports",
+  "image": "https://source.unsplash.com/featured/?yoga-mat",
+  "isDeleted": false
+},
+{
+  "name": "Fitness Resistance Band",
+  "description": "Elastic resistance band for strength workouts",
+  "price": 15,
+  "category": "sports",
+  "image": "https://source.unsplash.com/featured/?resistance-band",
+  "isDeleted": false
+},
+{
+  "name": "Tennis Racket Pro",
+  "description": "Lightweight tennis racket for competitive play",
+  "price": 120,
+  "category": "sports",
+  "image": "https://source.unsplash.com/featured/?tennis-racket",
+  "isDeleted": false
+},
+{
+  "name": "Sport Water Bottle",
+  "description": "Reusable sports bottle for gym and outdoor",
+  "price": 12,
+  "category": "sports",
+  "image": "https://source.unsplash.com/featured/?sports-bottle",
+  "isDeleted": false
+},
+{
+  "name": "Cycling Helmet",
+  "description": "Protective helmet designed for road cycling",
+  "price": 60,
+  "category": "sports",
+  "image": "https://source.unsplash.com/featured/?cycling-helmet",
+  "isDeleted": false
+},
+{
+  "name": "Camping Backpack",
+  "description": "Large backpack suitable for camping trips",
+  "price": 90,
+  "category": "sports",
+  "image": "https://source.unsplash.com/featured/?hiking-backpack",
+  "isDeleted": false
+},
+{
+  "name": "Men Cotton T Shirt",
+  "description": "Soft cotton t shirt designed for daily wear",
+  "price": 20,
+  "category": "clothes",
+  "image": "https://source.unsplash.com/featured/?tshirt",
+  "isDeleted": false
+},
+{
+  "name": "Women Casual T Shirt",
+  "description": "Comfortable casual t shirt for everyday outfit",
+  "price": 22,
+  "category": "clothes",
+  "image": "https://source.unsplash.com/featured/?women-tshirt",
+  "isDeleted": false
+},
+{
+  "name": "Classic Denim Jacket",
+  "description": "Blue denim jacket with modern stylish design",
+  "price": 95,
+  "category": "clothes",
+  "image": "https://source.unsplash.com/featured/?denim-jacket",
+  "isDeleted": false
+},
+{
+  "name": "Men Hoodie",
+  "description": "Warm hoodie perfect for winter casual outfits",
+  "price": 55,
+  "category": "clothes",
+  "image": "https://source.unsplash.com/featured/?hoodie",
+  "isDeleted": false
+},
+{
+  "name": "Women Yoga Leggings",
+  "description": "Stretchable leggings designed for yoga workouts",
+  "price": 40,
+  "category": "clothes",
+  "image": "https://source.unsplash.com/featured/?leggings",
+  "isDeleted": false
+},
+{
+  "name": "Men Slim Jeans",
+  "description": "Slim fit jeans with modern stylish design",
+  "price": 65,
+  "category": "clothes",
+  "image": "https://source.unsplash.com/featured/?jeans",
+  "isDeleted": false
+},
+{
+  "name": "Summer Beach Shorts",
+  "description": "Light shorts designed for beach and summer",
+  "price": 28,
+  "category": "clothes",
+  "image": "https://source.unsplash.com/featured/?shorts",
+  "isDeleted": false
+},
+{
+  "name": "Men Casual Shirt",
+  "description": "Stylish casual shirt perfect for daily outfit",
+  "price": 45,
+  "category": "clothes",
+  "image": "https://source.unsplash.com/featured/?casual-shirt",
+  "isDeleted": false
+},
+{
+  "name": "Women Fashion Dress",
+  "description": "Elegant dress designed for special occasions",
+  "price": 85,
+  "category": "clothes",
+  "image": "https://source.unsplash.com/featured/?dress",
+  "isDeleted": false
+},
+{
+  "name": "Winter Wool Scarf",
+  "description": "Soft wool scarf designed for cold weather",
+  "price": 25,
+  "category": "clothes",
+  "image": "https://source.unsplash.com/featured/?scarf",
+  "isDeleted": false
+},
+{
+  "name": "Wireless Headphones",
+  "description": "Noise cancelling wireless headphones",
+  "price": 130,
+  "category": "electronics",
+  "image": "https://source.unsplash.com/featured/?headphones",
+  "isDeleted": false
+},
+{
+  "name": "Bluetooth Speaker",
+  "description": "Portable bluetooth speaker with strong sound",
+  "price": 70,
+  "category": "electronics",
+  "image": "https://source.unsplash.com/featured/?bluetooth-speaker",
+  "isDeleted": false
+},
+{
+  "name": "Gaming Mechanical Keyboard",
+  "description": "Mechanical keyboard designed for gamers",
+  "price": 95,
+  "category": "electronics",
+  "image": "https://source.unsplash.com/featured/?gaming-keyboard",
+  "isDeleted": false
+},
+{
+  "name": "Gaming RGB Mouse",
+  "description": "High precision gaming mouse with RGB lights",
+  "price": 45,
+  "category": "electronics",
+  "image": "https://source.unsplash.com/featured/?gaming-mouse",
+  "isDeleted": false
+},
+{
+  "name": "4K Computer Monitor",
+  "description": "High resolution monitor for work and gaming",
+  "price": 320,
+  "category": "electronics",
+  "image": "https://source.unsplash.com/featured/?computer-monitor",
+  "isDeleted": false
+},
+{
+  "name": "Laptop Pro",
+  "description": "High performance laptop for productivity",
+  "price": 1100,
+  "category": "electronics",
+  "image": "https://source.unsplash.com/featured/?laptop",
+  "isDeleted": false
+},
+{
+  "name": "Tablet Device",
+  "description": "Portable tablet suitable for entertainment",
+  "price": 450,
+  "category": "electronics",
+  "image": "https://source.unsplash.com/featured/?tablet",
+  "isDeleted": false
+},
+{
+  "name": "Smart Fitness Watch",
+  "description": "Smart watch tracking health and workouts",
+  "price": 180,
+  "category": "electronics",
+  "image": "https://source.unsplash.com/featured/?smartwatch",
+  "isDeleted": false
+},
+{
+  "name": "Professional Camera",
+  "description": "High quality digital camera for photography",
+  "price": 900,
+  "category": "electronics",
+  "image": "https://source.unsplash.com/featured/?camera",
+  "isDeleted": false
+},
+{
+  "name": "USB C Charger",
+  "description": "Fast charging adapter for modern devices",
+  "price": 25,
+  "category": "electronics",
+  "image": "https://source.unsplash.com/featured/?charger",
+  "isDeleted": false
+}]
