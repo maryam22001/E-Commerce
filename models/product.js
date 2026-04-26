@@ -29,15 +29,12 @@ const productSchema = new mongoose.Schema({
         required: true,
         min: [0, 'Price must be a positive number'],
     },
-    stock: {
-        type: Number,
-        required: true,
-        min: [0, 'Stock must be a positive number'],
-    },
+    
+    
      isDeleted:{
         type:Boolean,
+        select:false,
         default: false,
-        
      }
 }, {
      versionKey: false,

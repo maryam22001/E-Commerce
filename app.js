@@ -4,6 +4,7 @@ const app = express();
 const path = require('path');
 require('dotenv').config(); //from optiontions I can pase the path of the .env file if it is not in the root directory
 const productsRoute = require('./routes/products.js');
+const globalError = require('./middlewares/globalError.js');
 
 /**app.use((req, res, next) => {
 console.log(`${req.method} ${req.url} ${new Date().toISOString()}`);
@@ -23,5 +24,6 @@ app.use('/products', productsRoute);
 app.use((req, res) => {
   res.sendFile(path.join(__dirname, 'views', 'err.html'));
 });
+app.use(globalError)
 
 module.exports = app;
