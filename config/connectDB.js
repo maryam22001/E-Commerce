@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const connectDB = async() => {
     try {
-        const conn = await mongoose.connect(process.env.PRODUCTION_DATABASE_URL);
+        const conn = await mongoose.connect(process.env.DATABASE_URL);
         // use chalk to color the console log
         console.log(`MongoDB Connected: ${conn.connection.name}`);
     } catch (error) {

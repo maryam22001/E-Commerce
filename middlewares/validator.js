@@ -1,13 +1,13 @@
-const validator=schema=>async (req,res,next)=>{
-    try{
-       
-        const checkSchema =await schema.validate(req.body,{abortEarly:false });
-        req.body=checkSchema;
+const AppError = require('../utils/AppError.js'); 
 
-       if(checkSchema) next();
-    }catch(error){
-        const err= error.errors.join(",")
-        next(new AppError(error.message,400))
+const validator = schema => async (req, res, next) => {
+    try {
+        const checkSchema = await schema.validate(req.body, { abortEarly: false });
+        req.body = checkSchema;
+        if (checkSchema) next();
+    } catch (error) {
+        next(new AppError(error.errors.join(', '), 400));
     }
-}
-module.exports=validator;
+};
+
+module.exports = validator;
