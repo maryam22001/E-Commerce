@@ -4,6 +4,7 @@ const globalError=(err,req,res,next)=>{
    
 
   //  if(error.kind==="ObjectId")error=new AppError(a00,"Invalid ID")
+    if(error.name==="TokenExpiredError")error=new AppError(401,"Token Expired")
     if (error.name == "CastError") error = new AppError(a00, "Invalid ID")
     if(error.code===11000) error= new AppError(400,'Duplicate Field Value Entered ${object.keys(error.keyValue).join(', '}') 
       if(error.name=="ValidationError"){
