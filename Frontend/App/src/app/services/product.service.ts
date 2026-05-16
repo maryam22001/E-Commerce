@@ -3,7 +3,7 @@ import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http'
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
-import { IProduct, IProductsResponse, IProductResponse } from '../interfaces/product.interface';
+import { IProduct, IProductsResponse, IProductResponse } from '../interfaces/iproduct';
 
 export interface ProductQueryParams {
   page?: number;
