@@ -29,6 +29,12 @@ exports.signup = catchAsync(async (req, res, next) => {
     console.log('User saved:', newUser);
     console.log(`OTP for ${email}: ${otp}`);
 
+    await sendEmail({
+        to: newUser.email,
+        subject: 'Your Account Verification OTP',
+        text: `Hello ${name},\n\nYour One-Time Password (OTP) for account verification is: ${otp}\n\nThis OTP is valid for 10 minutes.`
+    });
+
     res.status(201).json({
         success: true,
         message: 'Account created. Check your email for the OTP.',
@@ -85,7 +91,7 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
     user.ResetToken = resetToken;
     user.ResetDate = Date.now() + 10 * 60 * 1000;
     await user.save();
-    const resetUrl =`http://localhost:8080/auth/resetPassword/${resetToken}`;
+    const resetUrl =`http://localhost:4200/auth/reset-password/${resetToken}`;
    await sendEmail({
         to: user.email,
         subject: 'Password Reset',

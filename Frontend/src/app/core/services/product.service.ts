@@ -3,40 +3,27 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Product, ProductFilters } from '../models/product.model';
 import { ApiResponse } from '../models/user.model';
-import { environment } from '../../../environments/environment';
-
-@Injectable({ providedIn: 'root' })
+@Injectable({
+  providedIn: 'root'
+})
 export class ProductService {
-  private http = inject(HttpClient);
-  private base = `${environment.apiUrl}/products`;
+  private apiUrl = 'http://localhost:8080/products';
 
-  getAll(filters: ProductFilters = {}): Observable<ApiResponse<Product[]>> {
-    let params = new HttpParams();
-    Object.entries(filters).forEach(([key, val]) => {
-      if (val !== undefined && val !== null && val !== '') {
-        params = params.set(key, String(val));
-      }
-    });
-    return this.http.get<ApiResponse<Product[]>>(this.base, { params });
+  constructor(private http: HttpClient) {}
+
+  getProducts(): Observable<Product[]> {
+    return this.http.get<Product[]>(this.apiUrl);
   }
 
-  getOne(id: string): Observable<ApiResponse<Product>> {
-    return this.http.get<ApiResponse<Product>>(`${this.base}/${id}`);
+  addProduct(product: any): Observable<Product> {
+    return this.http.post<Product>(this.apiUrl, product);
   }
 
-  create(data: Partial<Product>): Observable<ApiResponse<Product>> {
-    return this.http.post<ApiResponse<Product>>(this.base, data);
+  updateProduct(id: string, product: any): Observable<Product> {
+    return this.http.put<Product>(`${this.apiUrl}/${id}`, product);
   }
 
-  update(id: string, data: Partial<Product>): Observable<ApiResponse<Product>> {
-    return this.http.patch<ApiResponse<Product>>(`${this.base}/${id}`, data);
-  }
-
-  delete(id: string): Observable<void> {
-    return this.http.delete<void>(`${this.base}/${id}`);
-  }
-
-  softDelete(id: string): Observable<ApiResponse<Product>> {
-    return this.http.patch<ApiResponse<Product>>(`${this.base}/softDeleted/${id}`, {});
+  deleteProduct(id: string): Observable<any> {
+    return this.http.delete<any>(`${this.apiUrl}/${id}`);
   }
 }

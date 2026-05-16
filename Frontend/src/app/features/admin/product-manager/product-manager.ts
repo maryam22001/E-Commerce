@@ -1,101 +1,150 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
-import { ProductService } from '../../../core/services/product.service';
+import { FormsModule, ReactiveFormsModule, FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Product } from '../../../core/models/product.model';
 import { Spinner } from '../../../shared/components/spinner/spinner';
 
 @Component({
   selector: 'app-product-manager',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, Spinner],
+  imports: [CommonModule, ReactiveFormsModule, HttpClientModule],
   templateUrl: './product-manager.html'
 })
-export class ProductManager implements OnInit {
-  private productService = inject(ProductService);
-  private fb = inject(FormBuilder);
+export class ProductManagerComponent implements OnInit {
+  products: any[] = [];
+  productForm!: FormGroup;
+  isEditMode = false;
+  currentProductId: string | null = null;
+  private apiUrl = 'http://localhost:8080/products';
 
-  products: Product[] = [];
-  loading = true;
-  saving = false;
-  deleting: string | null = null;
-  error = '';
-  success = '';
-  showModal = false;
-  editingProduct: Product | null = null;
+  constructor(
+    private fb: FormBuilder,
+    private http: HttpClient
+  ) {}
 
-  categories = ['electronics', 'clothing', 'books', 'home', 'beauty', 'sports', 'toys'];
+  ngOnInit(): void {
+    this.initForm();
+    this.loadProducts();
+  }
 
-  form = this.fb.group({
-    name: ['', [Validators.required, Validators.minLength(3)]],
-    discription: ['', [Validators.required, Validators.minLength(3)]],
-    image: ['', [Validators.required, Validators.pattern(/^https?:\/\/.+/)]],
-    category: ['', Validators.required],
-    price: [0, [Validators.required, Validators.min(0)]]
-  });
-
-  get f() { return this.form.controls; }
-
-  ngOnInit(): void { this.load(); }
-
-  load(): void {
-    this.loading = true;
-    this.productService.getAll({ limit: 100 }).subscribe({
-      next: res => { this.products = res.data || []; this.loading = false; },
-      error: () => { this.loading = false; }
+  // Initialize the Reactive Form with validations
+  initForm(): void {
+    this.productForm = this.fb.group({
+      name: ['', [Validators.required, Validators.minLength(3)]],
+      price: [0, [Validators.required, Validators.min(0.01)]],
+      discription: ['', [Validators.required]],
+      category: ['', [Validators.required]],
+      image: ['', [Validators.required]]
     });
   }
 
-  openAdd(): void {
-    this.editingProduct = null;
-    this.form.reset({ price: 0 });
-    this.showModal = true;
-  }
-
-  openEdit(p: Product): void {
-    this.editingProduct = p;
-    this.form.patchValue({ name: p.name, discription: p.discription, image: p.image, category: p.category, price: p.price });
-    this.showModal = true;
-  }
-
-  save(): void {
-    if (this.form.invalid) { this.form.markAllAsTouched(); return; }
-    this.saving = true;
-    const data = this.form.value as Partial<Product>;
-    const op = this.editingProduct
-      ? this.productService.update(this.editingProduct._id, data)
-      : this.productService.create(data);
-
-    op.subscribe({
-      next: () => {
-        this.success = this.editingProduct ? 'Product updated!' : 'Product created!';
-        this.showModal = false;
-        this.saving = false;
-        this.load();
-        setTimeout(() => this.success = '', 3000);
+  // Fetch products from the backend API
+  loadProducts(): void {
+    this.http.get<any>(this.apiUrl).subscribe({
+      next: (data: any) => {
+        // Automatically handles both straight array or wrapped responses like data.products
+        this.products = data.data || data.products || data;
       },
-      error: err => {
-        this.error = err.error?.message || 'Operation failed.';
-        this.saving = false;
-      }
+      error: (err) => console.error('Failed to load products:', err)
     });
   }
 
-  softDelete(id: string): void {
-    if (!confirm('Archive this product?')) return;
-    this.deleting = id;
-    this.productService.softDelete(id).subscribe({
-      next: () => { this.load(); this.deleting = null; },
-      error: () => { this.deleting = null; }
+  // Handle Form Submission (Both Add and Update)
+  onSubmit(): void {
+    if (this.productForm.invalid) return;
+
+    // Ensure price is sent as a strict Number, not a string
+    const productData = {
+      ...this.productForm.value,
+      price: Number(this.productForm.value.price)
+    };
+
+    if (this.isEditMode && this.currentProductId) {
+      // Update existing product
+      this.http.patch(`${this.apiUrl}/${this.currentProductId}`, productData).subscribe({
+        next: () => {
+          this.loadProducts();
+          this.resetForm();
+          alert('Product updated successfully!');
+        },
+        error: (err) => {
+          console.error('Error updating product:', err);
+          let backendError = err.message;
+          if (err.error) {
+            if (Array.isArray(err.error.errors)) {
+              backendError = err.error.errors.map((e: any) => `${e.param || e.path || 'Field'}: ${e.msg || e.message}`).join('\n');
+            } else if (err.error.details) {
+              backendError = err.error.details.map((e: any) => e.message).join('\n');
+            } else {
+              backendError = err.error.message || JSON.stringify(err.error);
+            }
+          }
+          alert('Failed to update product:\n\n' + backendError);
+        }
+      });
+    } else {
+      // Add a new product
+      this.http.post(this.apiUrl, productData).subscribe({
+        next: () => {
+          this.loadProducts();
+          this.resetForm();
+          alert('Product added successfully!');
+        },
+        error: (err) => {
+          console.error('Error adding product:', err);          let backendError = err.message;
+          if (err.error) {
+            if (Array.isArray(err.error.errors)) {
+              backendError = err.error.errors.map((e: any) => `${e.param || e.path || 'Field'}: ${e.msg || e.message}`).join('\n');
+            } else if (err.error.details) {
+              backendError = err.error.details.map((e: any) => e.message).join('\n');
+            } else {
+              backendError = err.error.message || JSON.stringify(err.error);
+            }
+          }
+          alert('Failed to add product:\n\n' + backendError);
+        }
+      });
+    }
+  }
+
+  // Fill form fields with existing product data for editing
+  onEdit(product: any): void {
+    this.isEditMode = true;
+    this.currentProductId = product._id || product.id;
+    this.productForm.patchValue({
+      name: product.name,
+      price: product.price,
+      discription: product.discription,
+      category: product.category,
+      image: product.image
     });
   }
 
-  hardDelete(id: string): void {
-    if (!confirm('Permanently delete this product? This cannot be undone.')) return;
-    this.deleting = id;
-    this.productService.delete(id).subscribe({
-      next: () => { this.load(); this.deleting = null; },
-      error: () => { this.deleting = null; }
+  // Delete product action
+  onDelete(id: string): void {
+    if (confirm('Are you sure you want to delete this product?')) {
+      this.http.delete(`${this.apiUrl}/${id}`).subscribe({
+        next: () => {
+          // Instantly filter out from UI view
+          this.products = this.products.filter(p => (p as any)._id !== id && (p as any).id !== id);
+          alert('Product deleted successfully!');
+        },
+        error: (err) => console.error('Error deleting product:', err)
+      });
+    }
+  }
+
+  // Reset state
+  resetForm(): void {
+    this.isEditMode = false;
+    this.currentProductId = null;
+    this.productForm.reset({
+      name: '',
+      price: 0,
+      discription: '',
+      category: '',
+      image: ''
     });
   }
 }

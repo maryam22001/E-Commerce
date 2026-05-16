@@ -25,10 +25,25 @@ export class ProductDetail implements OnInit {
   added = false;
 
   ngOnInit(): void {
-    const id = this.route.snapshot.paramMap.get('id')!;
-    this.productService.getOne(id).subscribe({
-      next: res => { this.product = res.data || null; this.loading = false; },
-      error: err => { this.error = err.error?.message || 'Product not found.'; this.loading = false; }
+    const id = this.route.snapshot.paramMap.get('id');
+    if (!id) {
+      this.error = 'Product not found';
+      this.loading = false;
+      return;
+    }
+
+    this.productService.getProducts().subscribe({
+      next: (products: Product[]) => {
+        this.product = products.find((product: Product & { id?: number }) => product.id === Number(id)) || null;
+        if (!this.product) {
+          this.error = 'Product not found';
+        }
+        this.loading = false;
+      },
+      error: (err: any) => {
+        this.error = err.error?.message || 'Product error';
+        this.loading = false;
+      }
     });
   }
 

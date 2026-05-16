@@ -82,14 +82,14 @@ export class ProductList implements OnInit, OnDestroy {
     if (this.minPrice) filters['price[gte]'] = +this.minPrice;
     if (this.maxPrice) filters['price[lte]'] = +this.maxPrice;
 
-    this.productService.getAll(filters).subscribe({
-      next: res => {
+    this.productService.getProducts().subscribe({
+      next:(res:any) => {
         this.products = res.data || [];
         this.totalCount = res.count || 0;
         this.totalPages = res.page || Math.ceil(this.totalCount / this.limit);
         this.loading = false;
       },
-      error: err => {
+      error:( err:any)=> {
         this.error = err.error?.message || 'Failed to load products.';
         this.loading = false;
       }

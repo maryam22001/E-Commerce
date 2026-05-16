@@ -1,3 +1,5 @@
+const AppError = require('../utils/AppError.js'); 
+
 const globalError=(err,req,res,next)=>{
   console.log(err)
    let error=err

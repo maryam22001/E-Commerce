@@ -31,8 +31,8 @@ export class Home implements OnInit {
   ];
 
   ngOnInit(): void {
-    this.productService.getAll({ limit: 8 }).subscribe({
-      next: res => {
+    this.productService.getProducts().subscribe({
+      next:(res:any) => {
         this.featuredProducts = res.data || [];
         this.loading = false;
       },

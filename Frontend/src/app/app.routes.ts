@@ -2,7 +2,6 @@ import { Routes } from '@angular/router';
 import { authGuard } from './core/guards/auth.guard';
 import { adminGuard } from './core/guards/admin.guard';
 import { guestGuard } from './core/guards/guest.guard';
-import { ProductManager } from './features/admin/product-manager/product-manager';
 
 export const routes: Routes = [
   {
@@ -23,9 +22,9 @@ export const routes: Routes = [
   },
   {
     path: 'admin',
-    component: ProductManager
+    loadComponent: () => import('./features/admin/product-manager/product-manager').then(m => m.ProductManagerComponent)
   },
- 
+
   {
     path: 'profile',
     canActivate: [authGuard],
@@ -55,26 +54,6 @@ export const routes: Routes = [
       {
         path: 'reset-password/:token',
         loadComponent: () => import('./features/auth/reset-password/reset-password').then(m => m.ResetPassword)
-      }
-    ]
-  },
-  {
-    path: 'admin',
-    canActivate: [adminGuard],
-    loadComponent: () => import('./features/admin/admin-layout/admin-layout').then(m => m.AdminLayout),
-    children: [
-      { path: '', redirectTo: 'products', pathMatch: 'full' },
-      {
-        path: 'products',
-        loadComponent: () => import('./features/admin/product-manager/product-manager').then(m => m.ProductManager)
-      },
-      {
-        path: 'users',
-        loadComponent: () => import('./features/admin/user-manager/user-manager').then(m => m.UserManager)
-      },
-      {
-        path: 'orders',
-        loadComponent: () => import('./features/admin/order-manager/order-manager').then(m => m.OrderManager)
       }
     ]
   },
