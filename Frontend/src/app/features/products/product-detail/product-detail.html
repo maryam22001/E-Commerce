@@ -1,0 +1,70 @@
+<div class="container py-5">
+  <app-spinner [show]="loading"></app-spinner>
+
+  @if (error) {
+    <div class="alert alert-danger rounded-3">{{ error }}</div>
+  }
+
+  @if (!loading && product) {
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb" class="mb-4">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/" class="text-decoration-none text-dark">Home</a></li>
+        <li class="breadcrumb-item"><a routerLink="/products" class="text-decoration-none text-dark">Products</a></li>
+        <li class="breadcrumb-item active text-truncate" style="max-width:200px">{{ product.name }}</li>
+      </ol>
+    </nav>
+
+    <div class="row g-5 align-items-start">
+      <!-- Image -->
+      <div class="col-12 col-md-6">
+        <div class="rounded-4 overflow-hidden shadow-sm bg-light" style="height:420px">
+          <img [src]="product.image" [alt]="product.name" class="w-100 h-100" style="object-fit:cover">
+        </div>
+      </div>
+
+      <!-- Details -->
+      <div class="col-12 col-md-6">
+        <span class="badge bg-dark text-capitalize mb-2 px-3 py-2 rounded-pill">{{ product.category }}</span>
+        <h1 class="fw-bold mb-2">{{ product.name }}</h1>
+        <div class="d-flex align-items-center gap-2 mb-3">
+          <span class="text-warning">&#9733;&#9733;&#9733;&#9733;&#9734;</span>
+          <span class="text-muted small">(4.2)</span>
+        </div>
+        <h2 class="text-success fw-bold mb-3">\${{ product.price }}</h2>
+        <p class="text-muted mb-4 lh-lg">{{ product.discription }}</p>
+
+        <div class="d-flex align-items-center gap-3 mb-4">
+          <label class="fw-semibold">Quantity:</label>
+          <div class="input-group" style="width:130px">
+            <button class="btn btn-outline-secondary" type="button" (click)="quantity = quantity > 1 ? quantity - 1 : 1">-</button>
+            <input type="number" class="form-control text-center" [(ngModel)]="quantity" min="1" max="99">
+            <button class="btn btn-outline-secondary" type="button" (click)="quantity = quantity + 1">+</button>
+          </div>
+        </div>
+
+        @if (added) {
+          <div class="alert alert-success rounded-3 mb-3 py-2">
+            <i class="bi bi-check-circle me-2"></i> Added to cart successfully!
+          </div>
+        }
+
+        <div class="d-flex gap-3 flex-wrap">
+          <button class="btn btn-dark btn-lg px-4 rounded-3 fw-semibold" (click)="addToCart()">
+            <i class="bi bi-cart-plus me-2"></i> Add to Cart
+          </button>
+          <a routerLink="/cart" class="btn btn-outline-dark btn-lg px-4 rounded-3">
+            View Cart
+          </a>
+        </div>
+
+        <hr class="my-4">
+        <div class="d-flex gap-4 text-muted small">
+          <span><i class="bi bi-truck me-1"></i> Free shipping</span>
+          <span><i class="bi bi-arrow-return-left me-1"></i> Easy returns</span>
+          <span><i class="bi bi-shield-check me-1"></i> Secure payment</span>
+        </div>
+      </div>
+    </div>
+  }
+</div>

@@ -1,0 +1,79 @@
+<div class="min-vh-100 d-flex align-items-center bg-light">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-12 col-sm-10 col-md-8 col-lg-5">
+        <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+          <div class="bg-dark p-4 text-center">
+            <h2 class="text-white fw-bold mb-0"><span class="text-warning">Shop</span>Zone</h2>
+            <p class="text-muted mb-0 small">Create your account</p>
+          </div>
+          <div class="card-body p-4 p-md-5">
+            @if (error) {
+              <div class="alert alert-danger rounded-3">{{ error }}</div>
+            }
+            @if (success) {
+              <div class="alert alert-success rounded-3">{{ success }}</div>
+            }
+
+            <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+              <div class="mb-3">
+                <label class="form-label fw-semibold">Full Name</label>
+                <input type="text" class="form-control form-control-lg rounded-3"
+                  formControlName="name" placeholder="John Doe"
+                  [class.is-invalid]="f['name'].touched && f['name'].invalid">
+                @if (f['name'].touched && f['name'].errors?.['required']) {
+                  <div class="invalid-feedback">Name is required.</div>
+                }
+                @if (f['name'].touched && f['name'].errors?.['minlength']) {
+                  <div class="invalid-feedback">Minimum 3 characters.</div>
+                }
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label fw-semibold">Email Address</label>
+                <input type="email" class="form-control form-control-lg rounded-3"
+                  formControlName="email" placeholder="you@example.com"
+                  [class.is-invalid]="f['email'].touched && f['email'].invalid">
+                @if (f['email'].touched && f['email'].errors?.['required']) {
+                  <div class="invalid-feedback">Email is required.</div>
+                }
+                @if (f['email'].touched && f['email'].errors?.['email']) {
+                  <div class="invalid-feedback">Enter a valid email.</div>
+                }
+              </div>
+
+              <div class="mb-4">
+                <label class="form-label fw-semibold">Password</label>
+                <div class="input-group">
+                  <input [type]="showPassword ? 'text' : 'password'"
+                    class="form-control form-control-lg rounded-start-3"
+                    formControlName="password" placeholder="••••••••"
+                    [class.is-invalid]="f['password'].touched && f['password'].invalid">
+                  <button type="button" class="btn btn-outline-secondary rounded-end-3" (click)="showPassword = !showPassword">
+                    <i [class]="showPassword ? 'bi bi-eye-slash' : 'bi bi-eye'"></i>
+                  </button>
+                  @if (f['password'].touched && f['password'].errors?.['required']) {
+                    <div class="invalid-feedback">Password is required.</div>
+                  }
+                  @if (f['password'].touched && f['password'].errors?.['minlength']) {
+                    <div class="invalid-feedback">Minimum 6 characters.</div>
+                  }
+                </div>
+              </div>
+
+              <button type="submit" class="btn btn-dark btn-lg w-100 rounded-3 fw-semibold" [disabled]="loading">
+                @if (loading) { <span class="spinner-border spinner-border-sm me-2"></span> }
+                Create Account
+              </button>
+            </form>
+
+            <p class="text-center mt-4 mb-0 text-muted">
+              Already have an account?
+              <a routerLink="/auth/login" class="text-dark fw-semibold text-decoration-none">Sign In</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

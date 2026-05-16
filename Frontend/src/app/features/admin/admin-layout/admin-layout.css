@@ -1,0 +1,19 @@
+.admin-sidebar {
+  width: 220px;
+  min-width: 220px;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+}
+
+.admin-main { padding: 2rem; overflow-y: auto; }
+
+.active-nav {
+  background-color: rgba(255, 193, 7, 0.15) !important;
+  color: #ffc107 !important;
+}
+
+@media (max-width: 768px) {
+  .admin-sidebar { width: 60px; min-width: 60px; }
+  .admin-sidebar span, .admin-sidebar small, .admin-sidebar h5 { display: none; }
+}

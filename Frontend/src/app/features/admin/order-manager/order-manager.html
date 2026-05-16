@@ -1,0 +1,49 @@
+<div>
+  <div class="mb-4">
+    <h4 class="fw-bold mb-0">Order Manager</h4>
+    <p class="text-muted small mb-0">{{ orders.length }} orders</p>
+  </div>
+
+  @if (orders.length === 0) {
+    <div class="text-center py-5 text-muted">
+      <i class="bi bi-bag fs-1 d-block mb-2"></i>
+      <p>No orders yet.</p>
+    </div>
+  }
+
+  <div class="d-flex flex-column gap-3">
+    @for (order of orders; track order.id) {
+      <div class="card border-0 shadow-sm rounded-4 p-4">
+        <div class="d-flex justify-content-between align-items-start mb-3 flex-wrap gap-2">
+          <div>
+            <span class="fw-bold">{{ order.id }}</span>
+            <p class="text-muted small mb-0">{{ order.createdAt | date:'medium' }}</p>
+            @if (order.shippingAddress) {
+              <p class="text-muted small mb-0">
+                {{ order.shippingAddress.fullName }} — {{ order.shippingAddress.city }}, {{ order.shippingAddress.country }}
+              </p>
+            }
+          </div>
+          <div class="text-end">
+            <p class="fw-bold text-success mb-1">\${{ order.totalPrice?.toFixed(2) }}</p>
+            <select class="form-select form-select-sm rounded-3" style="width:140px"
+              [value]="order.status" (change)="updateStatus(order.id, $any($event.target).value)">
+              @for (s of statuses; track s) {
+                <option [value]="s">{{ s | titlecase }}</option>
+              }
+            </select>
+          </div>
+        </div>
+        <div class="d-flex gap-2 flex-wrap">
+          @for (item of order.items; track item.product._id) {
+            <div class="d-flex align-items-center gap-2 bg-light rounded-3 px-2 py-1">
+              <img [src]="item.product.image" class="rounded-2" style="width:32px;height:32px;object-fit:cover">
+              <span class="small fw-semibold">{{ item.product.name }}</span>
+              <span class="badge bg-secondary">x{{ item.quantity }}</span>
+            </div>
+          }
+        </div>
+      </div>
+    }
+  </div>
+</div>
