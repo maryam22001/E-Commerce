@@ -8,7 +8,7 @@ class ApiFeature{
    filter(){
     const queryObj={...this.queryStr}
     let excludeFields=["sort","page","limit","skip","fields","search"]
-    excludeFields.forEach(el=>delete queryObj[key])
+    excludeFields.forEach(el=>delete queryObj[el])
     console.log(queryObj)
     let queryStr=JSON.stringify(queryObj);
     queryStr=queryStr.replace(/\b(gte|gt|lte|lt)\b/g,match=>`$${match}`);

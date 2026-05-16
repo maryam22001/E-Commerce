@@ -23,7 +23,7 @@ app.use(morgan("dev"));
 // Security & CORS middlewares
 app.use(cors()); //>?? port
 app.use(helmet());
-app.use(mongoSanitize());
+/**app.use(mongoSanitize());**/
 
 // Rate limiting: Limit each IP to 100 requests per window (here, 1 hour)
 const limiter = rateLimit({
